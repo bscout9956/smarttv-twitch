@@ -40,6 +40,7 @@ function extractStreamDeclarations(input)
 
   return result;
 }
+
 function extractQualityFromStream(input)
 {
   var myRegexp = /#EXT-X-MEDIA:.*NAME=\"(\w+)\".*/g;
@@ -65,6 +66,7 @@ function extractQualityFromStream(input)
 	}
 	return quality;
 }
+
 function extractUrlFromStream(input)
 {
 	return input.split("\n")[2];
@@ -93,7 +95,7 @@ function sleep(millis, callback) {
 
 function SceneSceneChannel() {
 
-};
+}
 
 SceneSceneChannel.shutdownStream = function()
 {
@@ -137,7 +139,11 @@ SceneSceneChannel.qualityDisplay = function()
 	}
 	
 	$('#quality_name').text(SceneSceneChannel.quality);
+	
 };
+
+
+
 
 SceneSceneChannel.initLanguage = function ()
 {
@@ -178,6 +184,8 @@ SceneSceneChannel.prototype.handleFocus = function () {
     SceneSceneChannel.hidePanel();
     $('#stream_info_name').text(SceneSceneBrowser.selectedChannel);
 	$("#stream_info_title").text("");
+	$("#stream_info_fps").text("");
+	$("#stream_info_video_height").text("");
 	$("#stream_info_viewer").text("");
 	$("#stream_info_icon").attr("src", "");
 	SceneSceneChannel.updateStreamInfo();
@@ -245,6 +253,8 @@ SceneSceneChannel.prototype.handleKeyDown = function (keyCode) {
 				break;
 			case sf.key.RIGHT:
 				SceneSceneChannel.hidePanel();
+				break;
+			case sf.key.INFO:
 				break;
 			case sf.key.UP:
 				break;
@@ -422,6 +432,8 @@ SceneSceneChannel.updateStreamInfo = function()
 				{
 					var response = $.parseJSON(xmlHttp.responseText);
 					$("#stream_info_title").text(response.stream.channel.status);
+					$("#stream_info_fps").text("FPS: " + response.stream.average_fps);
+					$("#stream_info_video_height").text("Resolution: " + response.stream.video_height);
 					$("#stream_info_viewer").text(addCommas(response.stream.viewers) + ' ' + STR_VIEWER);
 					$("#stream_info_icon").attr("src", response.stream.channel.logo);
 				}

@@ -3,7 +3,7 @@ alert('SceneSceneBrowser.js loaded');
 SceneSceneBrowser.selectedChannel;
 
 SceneSceneBrowser.ItemsLimit = 100;
-SceneSceneBrowser.ColoumnsCount = 4;
+SceneSceneBrowser.ColoumnsCount = 6;
 
 SceneSceneBrowser.MODE_NONE = -1;
 SceneSceneBrowser.MODE_ALL = 0;
@@ -109,7 +109,7 @@ SceneSceneBrowser.createCell = function(row_id, coloumn_id, data_name, thumbnail
 			<div class="stream_text" ' + infostyle + '> \
 			<div class="stream_title">' + title + '</div> \
 			<div class="stream_info">' + info + '</div> \
-            <div class="stream_info">' + info2 + '</div> \
+            <div class="stream_info2">' + info2 + '</div> \
             </div>');
 };
 
