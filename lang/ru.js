@@ -3,6 +3,7 @@ var STR_CHANNELS = "Каналы";
 var STR_GAMES = "Игры";
 var STR_OPEN = "Открыть";
 var STR_REFRESH = "Обновить";
+var STR_EXIT = "кончать";
 
 var STR_PLACEHOLDER_OPEN = "Введите имя канала...";
 

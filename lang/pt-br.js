@@ -3,6 +3,7 @@ var STR_CHANNELS = "Canais";
 var STR_GAMES = "Jogos";
 var STR_OPEN = "Abrir";
 var STR_REFRESH = "Atualizar";
+var STR_EXIT = "Sair";
 
 var STR_PLACEHOLDER_OPEN = "Insira o nome do canal";
 

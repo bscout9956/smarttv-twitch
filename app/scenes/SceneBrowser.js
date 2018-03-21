@@ -463,6 +463,7 @@ SceneSceneBrowser.initLanguage = function ()
 	$('.label_games').html(STR_GAMES);
 	$('.label_open').html(STR_OPEN);
 	$('.label_refresh').html(STR_REFRESH);
+	$('.label_exit').html(STR_EXIT);
 	$('.label_placeholder_open').attr("placeholder", STR_PLACEHOLDER_OPEN);
 };
 
@@ -512,7 +513,7 @@ SceneSceneBrowser.prototype.handleKeyDown = function (keyCode)
 {
 	alert("SceneSceneBrowser.handleKeyDown(" + keyCode + ")");
 	
-	if (keyCode == sf.key.RETURN)
+	if (keyCode == sf.key.EXIT || keycode == sf.key.RETURN)
 	{
 		if (SceneSceneBrowser.mode === SceneSceneBrowser.MODE_GAMES_STREAMS && !SceneSceneBrowser.loadingData)
 		{
