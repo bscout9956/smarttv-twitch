@@ -4,7 +4,7 @@ var timeoutID;
 
 SceneSceneChannel.Player = null;
 
-SceneSceneChannel.loadingDataTryMax = 15;
+SceneSceneChannel.loadingDataTryMax = 12;
 SceneSceneChannel.loadingDataTry;
 SceneSceneChannel.loadingDataTimeout;
 
