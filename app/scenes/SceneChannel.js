@@ -1,5 +1,7 @@
 alert('SceneSceneChannel.js loaded');
 
+var timeoutID;
+
 SceneSceneChannel.Player = null;
 
 SceneSceneChannel.loadingDataTryMax = 15;
@@ -237,6 +239,8 @@ SceneSceneChannel.prototype.handleKeyDown = function (keyCode) {
 				{
 					SceneSceneChannel.qualityIndex--;
 					SceneSceneChannel.qualityDisplay();
+					clearHide();
+					setHide();
 				}
 				break;
 			case sf.key.CH_DOWN:
@@ -246,6 +250,8 @@ SceneSceneChannel.prototype.handleKeyDown = function (keyCode) {
 				{
 					SceneSceneChannel.qualityIndex++;
 					SceneSceneChannel.qualityDisplay();
+					clearHide();
+					setHide();
 				}
 				break;
 			case sf.key.LEFT:
@@ -451,6 +457,7 @@ SceneSceneChannel.showPanel = function()
 {
 	SceneSceneChannel.qualityDisplay();
 	$("#scene_channel_panel").show();
+	setHide();
 };
 
 SceneSceneChannel.hidePanel = function()
@@ -458,7 +465,20 @@ SceneSceneChannel.hidePanel = function()
 	$("#scene_channel_panel").hide();
 	SceneSceneChannel.quality = SceneSceneChannel.qualityPlaying;
 	SceneSceneChannel.qualityIndex = SceneSceneChannel.qualityPlayingIndex;
+	clearHide();
 };
+
+function setHide() {
+	timeoutID = window.setTimeout(TimeHidePanel, 6000);
+}
+
+function TimeHidePanel(){
+	SceneSceneChannel.hidePanel();
+}
+
+function clearHide() {
+		window.clearTimeout(timeoutID);
+}	
 
 SceneSceneChannel.isPanelShown = function()
 {
