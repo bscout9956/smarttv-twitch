@@ -513,7 +513,7 @@ SceneSceneBrowser.prototype.handleKeyDown = function (keyCode)
 {
 	alert("SceneSceneBrowser.handleKeyDown(" + keyCode + ")");
 	
-	if (keyCode == sf.key.EXIT || keycode == sf.key.RETURN)
+	if (keyCode == sf.key.RETURN)
 	{
 		if (SceneSceneBrowser.mode === SceneSceneBrowser.MODE_GAMES_STREAMS && !SceneSceneBrowser.loadingData)
 		{

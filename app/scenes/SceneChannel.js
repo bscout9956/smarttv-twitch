@@ -368,26 +368,19 @@ SceneSceneChannel.qualityChanged = function()
 	SceneSceneChannel.playingUrl = 'http://usher.twitch.tv/api/channel/hls/' + SceneSceneBrowser.selectedChannel + '.m3u8?type=any&sig=' + SceneSceneChannel.tokenResponse.sig + '&token=' + escape(SceneSceneChannel.tokenResponse.token);
 	SceneSceneChannel.qualityIndex = 0;
 	
-	for (var i = 0; i < SceneSceneChannel.qualities.length; i++)
-	{
-		if (SceneSceneChannel.qualities[i].id === SceneSceneChannel.quality)
-		{
-			SceneSceneChannel.qualityIndex = i + 1;
-			SceneSceneChannel.playingUrl = SceneSceneChannel.qualities[i].url;
-			break;
-		}
-	}
+	console.log(SceneSceneChannel.qualities[0]);
 	
-	if (SceneSceneChannel.qualityIndex == 0)
-	{
-		SceneSceneChannel.quality = SceneSceneChannel.QualityAuto;
-	}
+	SceneSceneChannel.qualityIndex = 1;
+	SceneSceneChannel.playingUrl = SceneSceneChannel.qualities[0].url;
 
 	SceneSceneChannel.qualityPlaying = SceneSceneChannel.quality;
 	SceneSceneChannel.qualityPlayingIndex = SceneSceneChannel.qualityIndex;
+	console.log("Playing Quality: " + SceneSceneChannel.qualityPlaying);
+	console.log("Quality Index: " + SceneSceneChannel.qualityIndex);
 
 	SceneSceneChannel.Player.Stop();
 	SceneSceneChannel.Player.Play(SceneSceneChannel.playingUrl + '|COMPONENT=HLS');
+	console.log("Playing url: " + SceneSceneChannel.playingUrl);
 };
 
 SceneSceneChannel.showDialog = function(title)
