@@ -10,6 +10,7 @@ SceneSceneBrowser.MODE_ALL = 0;
 SceneSceneBrowser.MODE_GAMES = 1;
 SceneSceneBrowser.MODE_GAMES_STREAMS = 2;
 SceneSceneBrowser.MODE_GO = 3;
+SceneSceneBrowser.MODE_TOOLS = 3;
 
 SceneSceneBrowser.mode = SceneSceneBrowser.MODE_NONE;
 SceneSceneBrowser.gameSelected = null;
@@ -18,6 +19,7 @@ SceneSceneBrowser.cursorX = 0;
 SceneSceneBrowser.cursorY = 0;
 
 SceneSceneBrowser.ime = null;
+SceneSceneBrowser.ime2 = null;
 
 SceneSceneBrowser.loadingData = false;
 SceneSceneBrowser.loadingDataTryMax = 12;
@@ -316,6 +318,7 @@ SceneSceneBrowser.showDialog = function(title)
 {
 	$("#streamname_frame").hide();
 	$("#stream_table").hide();
+	$("#username_frame").hide();
 	$("#dialog_loading_text").text(title);
 	$("#dialog_loading").show();
 };
@@ -324,6 +327,7 @@ SceneSceneBrowser.showTable = function()
 {
 	$("#dialog_loading").hide();
 	$("#streamname_frame").hide();
+	$("#username_frame").hide();
 	$("#stream_table").show();
     
     ScrollHelper.scrollVerticalToElementById('thumbnail_' + SceneSceneBrowser.cursorY + '_' + SceneSceneBrowser.cursorX, 0);
@@ -334,6 +338,13 @@ SceneSceneBrowser.showInput = function()
 	$("#dialog_loading").hide();
 	$("#stream_table").hide();
 	$("#streamname_frame").show();
+};
+
+SceneSceneBrowser.showInputTools = function()
+{
+	$("#dialog_loading").hide();
+	$("#stream_table").hide();
+	$("#username_frame").show();
 };
 
 SceneSceneBrowser.switchMode = function(mode)
@@ -369,6 +380,13 @@ SceneSceneBrowser.switchMode = function(mode)
 			SceneSceneBrowser.showInput();
 			SceneSceneBrowser.refreshInputFocus();
 		}
+		else if (mode == SceneSceneBrowser.MODE_TOOLS)
+		{
+			SceneSceneBrowser.clean();
+			SceneSceneBrowser.showInputTools();
+			SceneSceneBrowser.refreshInputFocusTools();
+		}
+		
 	}
 };
 
@@ -444,6 +462,25 @@ SceneSceneBrowser.refreshInputFocus = function()
 	{
 	    $('#streamname_input').addClass('channelname');
 	    $('#streamname_button').addClass('button_go_focused');
+	}
+};
+
+SceneSceneBrowser.refreshInputFocusTools = function()
+{
+    $('#username_input').removeClass('channelname');
+    $('#username_input').removeClass('channelname_focused');
+    $('#username_button').removeClass('button_go');
+    $('#username_button').removeClass('button_go_focused');
+    
+	if (SceneSceneBrowser.cursorY == 0)
+	{
+	    $('#username_input').addClass('channelname_focused');
+	    $('#username_button').addClass('button_go');
+	}
+	else
+	{
+	    $('#username_input').addClass('channelname');
+	    $('#username_button').addClass('button_go_focused');
 	}
 };
 
@@ -561,6 +598,7 @@ SceneSceneBrowser.prototype.handleKeyDown = function (keyCode)
 			{
 				if (SceneSceneBrowser.cursorY > 0)
 				{
+					sf.key.preventDefault();
 					SceneSceneBrowser.removeFocus();
 					SceneSceneBrowser.cursorY--;
 					SceneSceneBrowser.addFocus();
@@ -568,8 +606,16 @@ SceneSceneBrowser.prototype.handleKeyDown = function (keyCode)
 			}
 			else
 			{
-				SceneSceneBrowser.cursorY = 0;
-				SceneSceneBrowser.refreshInputFocus();
+				if (SceneSceneBrowser.mode == SceneSceneBrowser.MODE_GO)
+					{
+						SceneSceneBrowser.cursorY = 0;
+						SceneSceneBrowser.refreshInputFocus();
+					}
+				else{
+					SceneSceneBrowser.cursorY = 0;
+					SceneSceneBrowser.refreshInputFocusTools();
+				}
+				
 			}
 			break;
 		case sf.key.DOWN:
@@ -578,6 +624,7 @@ SceneSceneBrowser.prototype.handleKeyDown = function (keyCode)
 				if (SceneSceneBrowser.cursorY < SceneSceneBrowser.getRowsCount() - 1
 						&& SceneSceneBrowser.cursorX < SceneSceneBrowser.getCellsCount(SceneSceneBrowser.cursorY + 1))
 				{
+					sf.key.preventDefault();
 					SceneSceneBrowser.removeFocus();
 					SceneSceneBrowser.cursorY++;
 					SceneSceneBrowser.addFocus();
@@ -585,8 +632,17 @@ SceneSceneBrowser.prototype.handleKeyDown = function (keyCode)
 			}
 			else
 			{
-				SceneSceneBrowser.cursorY = 1;
-				SceneSceneBrowser.refreshInputFocus();
+				if (SceneSceneBrowser.mode == SceneSceneBrowser.MODE_GO)
+				{
+					SceneSceneBrowser.cursorY = 1;
+					SceneSceneBrowser.refreshInputFocus();
+				}
+				else 
+				{
+					SceneSceneBrowser.cursorY = 1;
+					SceneSceneBrowser.refreshInputFocusTools();
+				}
+					
 			}
 			break;
 		case sf.key.ENTER:
@@ -599,6 +655,25 @@ SceneSceneBrowser.prototype.handleKeyDown = function (keyCode)
 				    SceneSceneBrowser.ime.inputTitle = 'Channel name';
 				    SceneSceneBrowser.ime.setOnCompleteFunc = onCompleteText;
 					SceneSceneBrowser.ime.onShow();
+				}
+				else
+				{
+					SceneSceneBrowser.selectedChannel = $('#streamname_input').val();
+					SceneSceneBrowser.openStream()
+				}
+			}
+			else if (SceneSceneBrowser.mode == SceneSceneBrowser.MODE_TOOLS)
+			{
+				if (SceneSceneBrowser.cursorY == 0)
+				{
+					SceneSceneBrowser.ime2 = new IMEShell_Common();
+					SceneSceneBrowser.ime2.inputboxID = 'username_input';
+				    SceneSceneBrowser.ime2.inputTitle = 'Username';
+				    SceneSceneBrowser.ime2.setOnCompleteFunc = onCompleteText;
+					SceneSceneBrowser.ime2.onShow();
+					
+					SceneSceneBrowser.ime2.focus();
+					SceneSceneBrowser.isIme2Focused = true;
 				}
 				else
 				{
@@ -635,6 +710,9 @@ SceneSceneBrowser.prototype.handleKeyDown = function (keyCode)
 			break;
 		case sf.key.YELLOW:
 			SceneSceneBrowser.switchMode(SceneSceneBrowser.MODE_GO);
+			break;
+		case sf.key.TOOLS:
+			SceneSceneBrowser.switchMode(SceneSceneBrowser.MODE_TOOLS);
 			break;
 		case sf.key.BLUE:
 			SceneSceneBrowser.refresh();

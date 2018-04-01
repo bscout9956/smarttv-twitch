@@ -368,6 +368,8 @@ SceneSceneChannel.onBufferingComplete = function () {
 };
 
 
+
+
 SceneSceneChannel.qualityChanged = function()
 {
 	SceneSceneChannel.showDialog("");
@@ -431,6 +433,7 @@ SceneSceneChannel.updateStreamInfo = function()
 				{
 					var response = $.parseJSON(xmlHttp.responseText);
 					$("#stream_info_title").text(response.stream.channel.status);
+					$("#stream_info_game").text(response.stream.game);
 					$("#stream_info_fps").text("FPS: " + response.stream.average_fps);
 					$("#stream_info_video_height").text("Resolution: " + response.stream.video_height);
 					$("#stream_info_viewer").text(addCommas(response.stream.viewers) + ' ' + STR_VIEWER);
