@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rsp stat="ok">
+  <list>
+    <widget id="Twitch">
+      <title>Twitch</title>
+      <compression size="667759" type="zip"/>
+      <description>Twitch app</description>
+      <download>http://192.168.XXX.XXX/TwitchTV_3.6_America_20160920.zip</download>
+    </widget>
+  </list>
+</rsp>
