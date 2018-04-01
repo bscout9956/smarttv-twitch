@@ -1,6 +1,8 @@
-smarttv-twitch
+smarttv-twitch-bscout9956
 ==============
 This is an app for Samsung SmartTV's designed to watch twitch.tv broadcasts.
+
+Edits were made as to improve the application without radically changing the base of the app.
 
 Installation
 ==============
